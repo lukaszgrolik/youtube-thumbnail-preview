@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>yt-thumbnail-preview</title>
+
+    <style>
+        body {
+            display: flex;
+        }
+
+        body>*+* {
+            margin-left: 2em;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="list1"></div>
+    <div id="list2"></div>
+
+    <template id="thumbnail-template">
+        <div class="thumbnail-block">
+            <!-- <img src="" /> -->
+            <img src="" style="width: 168px; height: 94px" />
+            <img src="" style="width: 246px; height: 138px" />
+            <img src="" style="width: 359.983px; height: 202.483px" />
+            <!-- <img src="" style="width: 1022.22px; height: 574.983px" /> -->
+        </div>
+    </template>
+
+    <script>
+        const thumbnails1 = [
+            // use relative path:
+            // './some-folder/image.png',
+            // or absolute path:
+            // 'file:///C:/Users/alice/Desktop/my images/image 123.png',
+            // replace spaces with %20 if images aren't loading:
+            // 'file:///C:/Users/alice/Desktop/my%20images/image%20123.png',
+            './images/flower-1.jpg',
+            './images/flower-2.jpg',
+            './images/flower-3.jpg',
+        ];
+        const thumbnails2 = [
+            './images/lake.jpg',
+            './images/trees-1.jpg',
+            './images/leaves.jpg',
+            './images/clouds.jpg',
+            './images/trees-2.jpg',
+        ];
+        const thumbnailBlockTemplate = document.getElementById('thumbnail-template');
+
+        addAllThumbnails();
+
+        function addAllThumbnails() {
+            const list1 = document.getElementById('list1');
+            const list2 = document.getElementById('list2');
+
+            addThumbnailsToContainer(list1, thumbnails1);
+            addThumbnailsToContainer(list2, thumbnails2);
+        }
+
+        function addThumbnailsToContainer(container, thumbnails) {
+            [...thumbnails].reverse().forEach(t => {
+                addThumbnail(container, t);
+            });
+        }
+
+        function addThumbnail(container, path) {
+            const template = thumbnailBlockTemplate.content.cloneNode(true);
+            const block = template.querySelector('.thumbnail-block');
+            const images = block.querySelectorAll('img');
+
+            images.forEach(img => {
+                img.setAttribute('src', path);
+            });
+
+            container.appendChild(block);
+        }
+
+    </script>
+
+</body>
+
+</html>
